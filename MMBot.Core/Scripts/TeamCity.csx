@@ -23,7 +23,18 @@ _hostname = robot.GetConfigVariable("MMBOT_TEAMCITY_HOSTNAME");
 _scheme = robot.GetConfigVariable("MMBOT_TEAMCITY_SCHEME") ?? "http";
 _baseUrl = string.Format("{0}://{1}", _scheme, _hostname);
 
-if (_hostname != null)
+if (_hostname == null)
+{
+	var sb = new StringBuilder();
+	sb.AppendLine("The TeamCity script does not seem to be configured correctly. You can configure using the following variables:");
+	sb.AppendLine("   MMBOT_TEAMCITY_HOSTNAME: The host name of the teamcity server e.g. teamcity.myhost.com");
+	sb.AppendLine("   MMBOT_TEAMCITY_USERNAME: The username of an account with access to the teamcity instance");
+	sb.AppendLine("   MMBOT_TEAMCITY_PASSWORD: The password of an account with access to the teamcity instance");
+	sb.AppendLine("   MMBOT_TEAMCITY_SCHEME: (Optional) The scheme teamcity server url defaults to http");
+	sb.AppendLine();
+	robot.Logger.Warn(sb.ToString());
+}
+else
 {
     
 
